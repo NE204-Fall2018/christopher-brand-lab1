@@ -12,11 +12,11 @@ $(manuscript).pdf: $(manuscript).tex text/*.tex references.bib images/*.png
 # Get/download necessary data
 data :
 	# Uncomment below to download WARNING: data set is large
-	#curl -L -o data/test_input.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
-	#curl -L -o data/cs137_co60.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
-	#curl -L -o data/co57.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
-	#curl -L -o data/ba133.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
-	#curl -L -o data/am241.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
+	#curl -L -o data/test_input.h5 https://berkeley.box.com/s/z4q1us6e6ao4179dmmbnrc3hasj0se29/test_input.h5 
+	#curl -L -o data/cs137_co60.h5 https://berkeley.box.com/s/z4q1us6e6ao4179dmmbnrc3hasj0se29/cs137_co60.h5 
+	#curl -L -o data/co57.h5 https://berkeley.box.com/s/z4q1us6e6ao4179dmmbnrc3hasj0se29/co57.h5 
+	#curl -L -o data/ba133.h5 https://berkeley.box.com/s/z4q1us6e6ao4179dmmbnrc3hasj0se29/ba133.h5 
+	#curl -L -o data/am241.h5 https://berkeley.box.com/s/z4q1us6e6ao4179dmmbnrc3hasj0se29/am241.h5 
 
 # Validate that downloaded data is not corrupted
 validate :
@@ -26,7 +26,7 @@ test :
 
 # Automate running the analysis code
 analysis :
-	cd code/ && python calibration_lab0.py
+	cd code/ && python ProduceGraphs.py
 parameters :
 	cd code/ && python find_k.py/ && find_m.py/ && find_Tau.py
 
