@@ -1,24 +1,30 @@
 \subsection{Experimental Setup}
-A countrate energy spectrum dataset consisting of  five sources wwas gathered with a coaxial high purity germanium detector (HPGE) by instructor Ross Barnowskifor. Out of the five sources $^{241}$Am and $^{137}$Cs were used to calibrate the energy spectrum and the peaks in $^{133}$Ba was used to benchmark the accuracy of the calibration. The known energies of the calibration peaks are presented below in Table~\ref{tab:CalSrc}.
+A countrate energy spectrum dataset consisting of two sources was gathered with a coaxial high purity germanium detector (HPGE). 
+The two sources used were  $^{57}$Co and $^{60}$Co and were used to calibrate the energy spectrum and optimize the filter parameters. The known energies of the calibration peaks are presented below in Table~\ref{tab:CalSrc}.
 
 \begin{table}[H]
         \begin{center}
                 \begin{tabular}{l|r}
                         \textbf{Source} & \textbf{Energy (keV)}\\
                         \hline
-                        $^{241}$Am      &       59.5    \\
-                        $^{137}$Cs      &       661.6   \\
+                        $^{57}$Co      &       136.47    \\
+                        $^{60}$Co      &       1173.22, 1332.49   \\
                 \end{tabular}
                 \caption{Source Isotopes and Corresponding Gamma-ray energies}
                 \label{tab:CalSrc}
         \end{center}
 \end{table}
 
-\subsection{Peak Selection}
-	
-	A program for peak selection was created using python 3.6, after inspection of the spectrum. The program iterated over the spectrum assuming a set number of gamma-ray energies were present because the spectrums consisted of only one source. With this knowledge, the max value was determined and the peak selected with a preset bin width. The peak information was recorded and then deleted to find the next max/peak.  
+Additionally, data was collected by generating a pulse from a generator. This simulated data was used to optimize the filter parameter and study noise from the system. 
+All of this data was collected through a digitization system from Struck Innovative Systems (SIS), SIS3302 module. Inorder to gather this data and parse it from the module,
+custom c++ based software was provided and then modified for our endeavor. The data parsed into the standard .h5 file format. 
 
-\subsection{Gaussian and Linear Fit}
+\subsection{Trapizoidal Filter Implemination}
+	
+	A script with a trapizoidal filter  was created using python 3.5, based off of the work done by V. Jordanov et. al.\cite{jordanov1994digital}. In addition an input spectrum, there are two parameters needed,
+	the rise time, k, of the trapizoid and the gap time,m or the trapizoid. The gap time was found by iterating passing a number of values of m through the script and finding the energy resolution of one of the  $^{60}$Co peaks. From this a energy resolution vs rise time graph was plotted and a minimized value for m was attempted to be found. An attempt was done to find the rise time, k, in much the same manner, however, the simulated pulse was used in this case so as to be able to evaluate the contributions of the various electronic noise components. 
+
+\subsection{Energy Calibration}
 
         The gamma-ray spectrum is approximated as being composed of a global non-linear background with guassian peaks due to the impingment of high branching ratio gamma-ray lines from radioactive decay.\cite{Knoll} The peaks are fitted by a Gaussian of the form:
 
@@ -26,7 +32,7 @@ A countrate energy spectrum dataset consisting of  five sources wwas gathered wi
 G(x; A,\mu, \sigma) = A\exp\bigg(-\frac{(x-\mu)^2}{2\sigma^2}\bigg)
 \end{equation}
 
-Additionally, the data was fit to a linear model and the two were summed together to achieve the final result. 
+Where x is the data, A is the amplitude, mu is the mean, and sigma is the standard deviation. Additionally, the data was then fit to a linear model as in lab0.  
 
 
 

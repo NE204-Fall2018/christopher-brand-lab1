@@ -1,1 +1,22 @@
-	The code developed for the energy peak fitting has a number of limitations. Notabely, the code relies on finding the max point in the spectrum inorder to locate the peaks. This was only possible because of visual inspection of the spectrums confirmed that this could be done. Additionally, the width size of the peaks are predetermined meaning that if one is not careful, it is possible to combine two peaks into one or even delete a peak. The method used for fitting the peaks also requires an extra step of fitting a linear model and adding it to the gaussian fit inorder to avoid incorrect curve fitting. However, the energy calibration does fit very well. The coefficient of determination for the linear fit is .99 showing a high degree of correlation. 
+A major concern with digital processing of signals is ballistic deficit. ballistic deficit is the different in amplitude between the shaped pulse (after it leaves the amplifier) 
+and the original pulse. This difference arises when the rise time of the original pulse is on the order of the shaping time in the amplifier, meaning that pulses will have smaller amplitudes,
+providing us with the incorrect energy information. These pulses can be corrected to an extent by sending the pulse through a trapizoidal filter as seen in Figure 3 of Section 3. 
+The flat top of the trapizoid, also known as the gap time, m, stabalizes the amplitudes so that they do not suffer from ballisti deficit. This can be seen in Figure 1 of Section 3, 
+where a number of m where compared to the energy resolution of a single peak. At low gap time (a triangle filter), the peak has low energy resolution and the peak has been broadend
+due to ballistic deficit. However, as we increase the gap time, the peak becomes more precise, because of the reduction of the ballistic deficit until it bottems out at ~300 +/-20 [ns]. After this,
+the gap time is no long able to reduce the ballistic deficit and so greater gap times are not useful. It should be noted that in this case, the error is entirly due to the large step size 
+choosen to minimize the gap time (steps of 20ns). This was done merely to save on time as the code takes time to run. Other sources of error, such as electronic noise and fit errors are negligible
+compared to the uncertainty due to the step size. 
+\linebreak
+\linebreak
+In order to study the contributions of the various electronic noise components, the rise time,k, of the trapizoid was varied while looking at a simulated pulse from a pulse generator. Doing this
+assures us that a majority of the noise that is seen comes from the internal electronics rather then from background or other sources. The results are shown in Figure 2 from Section 3. 
+This plot is not correct. Unfortuantly I was unable to figure out the problem in my code, however, inverting this graph produces a graph that looks like what I am suppose to get. I am going
+to assume that the inverse of this graph is correct for the purposes of discussing the various contributions to noise. This figure is shaped like a parabola because of the large contributions 
+due to series (voltage) noise and parallel (current) noise. Low rise times results in high contributions from series noise such as thermal (electron velocity changes that create voltage noise) 
+ and Johnson (noise from resistors changing the voltage  effects. At high rise times the noise
+again increases due to larger and larger contributions from parallel noise such as shot noise (flucuations of the current due to changes in kinetic energy of the electrons). The supposed graph
+would indicate that for all k series and parallel noise are the primary contribitor since any 1/f noise would result in a flat (ish) line. 1/f or flicker noise is the fundimental alterations 
+that exsit in all thing in nature. The optimal k found is 7400 +/- 200 [ns]. It should be noted that the error is entirly due to the large step size 
+choosen to minimize the gap time (steps of 20ns). This was done merely to save on time as the code takes time to run.
+  
