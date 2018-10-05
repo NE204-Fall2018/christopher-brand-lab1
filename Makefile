@@ -11,21 +11,24 @@ $(manuscript).pdf: $(manuscript).tex text/*.tex references.bib images/*.png
 
 # Get/download necessary data
 data :
-	curl -L -o lab0_spectral_data.txt https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
+	# Uncomment below to download WARNING: data set is large
+	#curl -L -o data/test_input.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
+	#curl -L -o data/cs137_co60.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
+	#curl -L -o data/co57.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
+	#curl -L -o data/ba133.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
+	#curl -L -o data/am241.h5 https://www.dropbox.com/s/hutmwip3681xlup/lab0_spectral_data.txt?dl=0 
 
 # Validate that downloaded data is not corrupted
 validate :
-	curl -L -o lab0_spectral_data.md5sum https://www.dropbox.com/s/amumdrm9zp1kn8d/lab0_spectral_data.md5?dl=0 
-	md5sum -c lab0_spectral_data.md5sum
 
 # Run tests on analysis code
 test :
-	pytest
-#	nosetests --no-byte-compile test/test_m*
 
 # Automate running the analysis code
 analysis :
 	cd code/ && python calibration_lab0.py
+parameters :
+	cd code/ && python find_k.py/ && find_m.py/ && find_Tau.py
 
 clean :
 	rm -f *.aux *.log *.bbl *.lof *.lot *.blg *.out *.toc *.run.xml *.bcf
